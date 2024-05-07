@@ -6,9 +6,10 @@ let gameIsStarted = false;
 let isGameOver = false;
 const elModal = document.querySelector(".js-modal");
 const elBoardsWrapper = document.querySelector(".boards");
-const elKarateMan = document.querySelector(".karate-man");
 const elTopScore = document.querySelector(".js-top-score");
+const elKarateMan = document.querySelector(".js-karate-man");
 const elCurrentScore = document.querySelector(".js-current-score");
+const elKarateManKick = document.querySelector(".js-karate-man-kick");
 const elModalGameScore = document.querySelector(".js-modal-game-score");
 const elModalPlayButton = document.querySelector(".js-modal-play-button");
 const elProgressBarItem = document.querySelector(".js-progress-bar-item");
@@ -204,10 +205,12 @@ const chooseDirection = (direction) => {
 
 // change karate man actions (change image)
 const changeKarateManActions = () => {
-  elKarateMan.setAttribute("src", "./assets/images/karate-man.svg");
-  elKarateMan.setAttribute("src", "./assets/images/karate-man-kick.svg");
+  elKarateMan.classList.add("hidden");
+  elKarateManKick.classList.remove("hidden");
+
   setTimeout(() => {
-    elKarateMan.setAttribute("src", "./assets/images/karate-man.svg");
+    elKarateManKick.classList.add("hidden");
+    elKarateMan.classList.remove("hidden");
   }, 100);
 };
 
@@ -225,11 +228,13 @@ document.addEventListener("keydown", (event) => {
       chooseDirection("left");
       changeKarateManActions();
       elKarateMan.classList.remove("right");
+      elKarateManKick.classList.remove("right");
     } else if (event.key === "ArrowRight") {
       playClickAudio();
       chooseDirection("right");
       changeKarateManActions();
       elKarateMan.classList.add("right");
+      elKarateManKick.classList.add("right");
     }
   }
 });
