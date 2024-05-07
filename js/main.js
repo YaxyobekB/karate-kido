@@ -102,6 +102,7 @@ const gameOver = () => {
   // open modal
   elModal.classList.remove("hidden");
   elModalGameScore.textContent = count;
+  elModalPlayButton.focus();
   elModalPlayButton.addEventListener("click", () => {
     window.location.reload();
   });
