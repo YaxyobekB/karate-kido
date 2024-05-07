@@ -16,7 +16,47 @@ html {
   width: 100%;
   height: 100%;
   background: #e7fbff;
-  overflow-x: hidden;
+  overflow: hidden;
+}
+
+/* score */
+.score {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  z-index: 2;
+  top: 20px;
+  right: 20px;
+  left: 20px;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  padding: 10px 20px;
+  border: 4px solid var(--primary-color);
+  border-radius: 12px;
+  font-size: 32px;
+  font-family: cursive;
+}
+
+/* progress bar */
+.progress-bar {
+  position: absolute;
+  z-index: 1;
+  top: 112px;
+  right: 44%;
+  width: 12%;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  padding: 4px;
+  border: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.progress-bar-item {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.3s linear, background-color 0.3s linear;
 }
 
 /* board */
@@ -64,25 +104,6 @@ html {
   background: url("https://madawaskadoors.ca/wp-content/uploads/2021/11/What-Is-Oak-Wood-The-Complete-Guide-To-Solid-Oak-Wood.jpeg");
   border-radius: 6px;
   border: 4px solid var(--primary-color);
-}
-
-/* score */
-.score {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: absolute;
-  z-index: 2;
-  top: 20px;
-  right: 20px;
-  left: 20px;
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(10px);
-  padding: 10px 20px;
-  border: 4px solid var(--primary-color);
-  border-radius: 12px;
-  font-size: 32px;
-  font-family: cursive;
 }
 
 /* board sizes */
