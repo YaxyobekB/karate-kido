@@ -1,0 +1,132 @@
+:root {
+  --primary-color: #7e3d00;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+.body {
+  width: 100%;
+  height: 100%;
+  background: #e7fbff;
+  overflow-x: hidden;
+}
+
+/* board */
+.boards {
+  width: 120px;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.board {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 140px;
+  background: url("https://madawaskadoors.ca/wp-content/uploads/2021/11/What-Is-Oak-Wood-The-Complete-Guide-To-Solid-Oak-Wood.jpeg");
+  border-left: 4px solid var(--primary-color);
+  border-right: 4px solid var(--primary-color);
+}
+
+.board:last-child {
+  border-bottom: 4px solid var(--primary-color);
+  border-radius: 0 0 8px 8px;
+}
+
+.left::before {
+  display: inline-block;
+  content: "";
+  position: absolute;
+  right: 80%;
+  width: 100%;
+  height: 28px;
+  background: url("https://madawaskadoors.ca/wp-content/uploads/2021/11/What-Is-Oak-Wood-The-Complete-Guide-To-Solid-Oak-Wood.jpeg");
+  border-radius: 6px;
+  border: 4px solid var(--primary-color);
+}
+
+.right::after {
+  display: inline-block;
+  content: "";
+  position: absolute;
+  left: 80%;
+  width: 100%;
+  height: 28px;
+  background: url("https://madawaskadoors.ca/wp-content/uploads/2021/11/What-Is-Oak-Wood-The-Complete-Guide-To-Solid-Oak-Wood.jpeg");
+  border-radius: 6px;
+  border: 4px solid var(--primary-color);
+}
+
+/* score */
+.score {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  z-index: 2;
+  top: 20px;
+  right: 20px;
+  left: 20px;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  padding: 10px 20px;
+  border: 4px solid var(--primary-color);
+  border-radius: 12px;
+  font-size: 32px;
+  font-family: cursive;
+}
+
+/* board sizes */
+.board.xs::after,
+.board.xs::before {
+  width: 80%;
+}
+
+.board.sm::after,
+.board.sm::before {
+  width: 100%;
+}
+
+.board.md::after,
+.board.md::before {
+  width: 120%;
+}
+
+.board.lg::after,
+.board.lg::before {
+  width: 140%;
+}
+
+/* nature */
+.grass {
+  position: absolute;
+  z-index: -1;
+  bottom: 0;
+  width: 100%;
+  height: 35%;
+  background: #10aa00;
+  border-top: 4px solid var(--primary-color);
+}
+
+/* image */
+.karate-man {
+  position: absolute;
+  bottom: 40px;
+  right: calc(50% + 80px);
+  width: 146px;
+  height: 200px;
+}
+
+.karate-man.right {
+  transform: rotateY(180deg);
+  left: calc(50% + 80px);
+}
