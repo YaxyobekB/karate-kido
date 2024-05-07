@@ -3,10 +3,14 @@ let gameLevel = 1;
 let randomDirections = [];
 let progressBarValue = 50;
 let gameIsStarted = false;
+let isGameOver = false;
+const elModal = document.querySelector(".js-modal");
 const elBoardsWrapper = document.querySelector(".boards");
 const elKarateMan = document.querySelector(".karate-man");
 const elTopScore = document.querySelector(".js-top-score");
 const elCurrentScore = document.querySelector(".js-current-score");
+const elModalGameScore = document.querySelector(".js-modal-game-score");
+const elModalPlayButton = document.querySelector(".js-modal-play-button");
 const elProgressBarItem = document.querySelector(".js-progress-bar-item");
 
 // audio
@@ -82,6 +86,7 @@ if (topScore) {
 
 // game over
 const gameOver = () => {
+  isGameOver = true;
   lostAudio.play();
 
   // set top score to local storage
@@ -94,9 +99,12 @@ const gameOver = () => {
     localStorage.setItem("top-score", count);
   }
 
-  // alert
-  // alert("Game over!");
-  // window.location.reload();
+  // open modal
+  elModal.classList.remove("hidden");
+  elModalGameScore.textContent = count;
+  elModalPlayButton.addEventListener("click", () => {
+    window.location.reload();
+  });
 };
 
 // set time and level with countdown
@@ -115,8 +123,10 @@ const setTimeAndLevel = () => {
 
   // progress bar
   elProgressBarItem.style.width = `${progressBarValue}%`;
-  if (progressBarValue > 0) {
+  if (progressBarValue >= 0) {
     progressBarValue = progressBarValue - 1;
+  } else {
+    gameOver();
   }
 
   // set progress bar background color
@@ -128,7 +138,11 @@ const setTimeAndLevel = () => {
     elProgressBarItem.style.background = "green";
   }
 
-  setTimeout(() => setTimeAndLevel(), Math.floor(300 / gameLevel));
+  setTimeout(() => {
+    if (!isGameOver) {
+      setTimeAndLevel();
+    }
+  }, Math.floor(300 / gameLevel));
 };
 
 // choose direction
@@ -184,31 +198,37 @@ const chooseDirection = (direction) => {
   // remove last child
   const elBoards = elBoardsWrapper.querySelectorAll(".board");
   elBoards[elBoards.length - 1].remove();
-
-  // if (randomDirections[count - 1]) {
-  // randomDirections = randomDirections.filter(
-  //   (board) => board.id !== randomDirections[count - 1].id
-  // );
-  // }
-
   count++;
+};
+
+// change karate man actions (change image)
+const changeKarateManActions = () => {
+  elKarateMan.setAttribute("src", "./assets/images/karate-man.svg");
+  elKarateMan.setAttribute("src", "./assets/images/karate-man-kick.svg");
+  setTimeout(() => {
+    elKarateMan.setAttribute("src", "./assets/images/karate-man.svg");
+  }, 100);
+};
+
+// play click audio
+const playClickAudio = () => {
+  clickAudio.currentTime = 0;
+  clickAudio.play();
 };
 
 // choose direction
 document.addEventListener("keydown", (event) => {
-  if (event.key === "ArrowLeft") {
-    elKarateMan.classList.remove("right");
-    chooseDirection("left");
-
-    // play audio
-    clickAudio.currentTime = 0;
-    clickAudio.play();
-  } else if (event.key === "ArrowRight") {
-    elKarateMan.classList.add("right");
-    chooseDirection("right");
-
-    // play audio
-    clickAudio.currentTime = 0;
-    clickAudio.play();
+  if (!isGameOver) {
+    if (event.key === "ArrowLeft") {
+      playClickAudio();
+      chooseDirection("left");
+      changeKarateManActions();
+      elKarateMan.classList.remove("right");
+    } else if (event.key === "ArrowRight") {
+      playClickAudio();
+      chooseDirection("right");
+      changeKarateManActions();
+      elKarateMan.classList.add("right");
+    }
   }
 });

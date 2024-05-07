@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="./css/main.css" />
   </head>
   <body class="body">
-
     <!-- score board -->
     <div class="score">
       <div class="js-current-score current-score">🔥 Ball: 0</div>
@@ -104,6 +103,27 @@
     />
     <!-- grass -->
     <div class="grass"></div>
+
+    <div class="js-modal modal hidden">
+      <div class="modal-content">
+        <div class="modal-header"></div>
+
+        <div class="modal-content-body">
+          <h1 class="modal-title">
+            <span> O'yin tugadi! </span>
+            <span> 🔥 </span>
+          </h1>
+          <p class="modal-description">
+            Siz jami <span class="js-modal-game-score">0</span> ball yig'dingiz!
+          </p>
+
+          <!-- button -->
+          <button class="js-modal-play-button modal-play-button">
+            O'ynash
+          </button>
+        </div>
+      </div>
+    </div>
 
     <script src="./js/main.js"></script>
   </body>
