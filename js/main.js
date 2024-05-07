@@ -1,9 +1,19 @@
-const elBoardsWrapper = document.querySelector(".boards");
-const elCurrentScore = document.querySelector(".js-current-score");
-const elTopScore = document.querySelector(".js-top-score");
-const elKarateMan = document.querySelector(".karate-man");
-let randomDirections = [];
 let count = 0;
+let gameLevel = 1;
+let randomDirections = [];
+let progressBarValue = 50;
+let gameIsStarted = false;
+const elBoardsWrapper = document.querySelector(".boards");
+const elKarateMan = document.querySelector(".karate-man");
+const elTopScore = document.querySelector(".js-top-score");
+const elCurrentScore = document.querySelector(".js-current-score");
+const elProgressBarItem = document.querySelector(".js-progress-bar-item");
+
+// audio
+const clickAudio = document.createElement("audio");
+const lostAudio = document.createElement("audio");
+clickAudio.setAttribute("src", "./assets/audio/click.mp3");
+lostAudio.setAttribute("src", "./assets/audio/fail.mp3");
 
 // get random direction
 const getRandomDirection = () => {
@@ -65,32 +75,81 @@ for (let i = 0; i < 6; i++) {
 // get top score to local storage
 const topScore = localStorage.getItem("top-score");
 if (topScore) {
-  elTopScore.textContent = `Eng yaxshi natija: ${topScore}`;
+  elTopScore.textContent = `Eng yaxshi natija: ${topScore} 🔥`;
 } else {
-  elTopScore.textContent = "Eng yaxshi natija: 0";
+  elTopScore.textContent = "Eng yaxshi natija: 0 🔥";
 }
+
+// game over
+const gameOver = () => {
+  lostAudio.play();
+
+  // set top score to local storage
+  if (topScore) {
+    if (count > Number(topScore)) {
+      localStorage.setItem("top-score", count);
+      elTopScore.textContent = `Eng yaxshi natija: ${count} 🔥`;
+    }
+  } else {
+    localStorage.setItem("top-score", count);
+  }
+
+  // alert
+  // alert("Game over!");
+  // window.location.reload();
+};
+
+// set time and level with countdown
+const setTimeAndLevel = () => {
+  if (count > 40 && count < 80) {
+    gameLevel = 1.5;
+  } else if (count > 80 && count < 120) {
+    gameLevel = 2;
+  } else if (count > 160 && count < 200) {
+    gameLevel = 3.5;
+  } else if (count > 200 && count < 250) {
+    gameLevel = 4;
+  } else if (count > 250 && count < 300) {
+    gameLevel = 4.5;
+  }
+
+  // progress bar
+  elProgressBarItem.style.width = `${progressBarValue}%`;
+  if (progressBarValue > 0) {
+    progressBarValue = progressBarValue - 1;
+  }
+
+  // set progress bar background color
+  if (progressBarValue > 0 && progressBarValue < 33) {
+    elProgressBarItem.style.background = "red";
+  } else if (progressBarValue > 33 && progressBarValue < 66) {
+    elProgressBarItem.style.background = "orange";
+  } else if (progressBarValue > 66) {
+    elProgressBarItem.style.background = "green";
+  }
+
+  setTimeout(() => setTimeAndLevel(), Math.floor(300 / gameLevel));
+};
 
 // choose direction
 const chooseDirection = (direction) => {
+  if (!gameIsStarted) {
+    gameIsStarted = true;
+    setTimeAndLevel();
+  }
+
+  if (progressBarValue < 100) {
+    progressBarValue++;
+  }
+
   const prevDirection = randomDirections[count].value;
   const nextDirection = randomDirections[count + 1].value;
 
   // game continues
   if (direction === prevDirection || direction === nextDirection) {
-    // set top score to local storage
-    if (topScore) {
-      if (count > Number(topScore)) {
-        localStorage.setItem("top-score", count);
-        elTopScore.textContent = `Eng yaxshi natija: ${count}`;
-      }
-    } else {
-      localStorage.setItem("top-score", count);
-    }
-
-    // alert
-    alert("Game over!");
+    gameOver();
   } else {
-    elCurrentScore.textContent = `Ball:  ${count + 1}`;
+    elCurrentScore.textContent = `🔥 Ball:  ${count + 1}`;
   }
 
   // random direction
@@ -140,8 +199,16 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "ArrowLeft") {
     elKarateMan.classList.remove("right");
     chooseDirection("left");
+
+    // play audio
+    clickAudio.currentTime = 0;
+    clickAudio.play();
   } else if (event.key === "ArrowRight") {
     elKarateMan.classList.add("right");
     chooseDirection("right");
+
+    // play audio
+    clickAudio.currentTime = 0;
+    clickAudio.play();
   }
 });
