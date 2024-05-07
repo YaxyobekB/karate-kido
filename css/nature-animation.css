@@ -18,19 +18,10 @@
 
 @keyframes left-to-right {
   0% {
-    transform: translateX(-120vw);
+    transform: translateX(-20vw);
   }
   100% {
-    transform: translateX(20vw);
-  }
-}
-
-@keyframes center-to-right {
-  0% {
-    transform: translateX(30vw);
-  }
-  100% {
-    transform: translateX(50vw);
+    transform: translateX(120vw);
   }
 }
 
@@ -70,7 +61,7 @@
   width: 200px;
   height: 200px;
   top: 20%;
-  animation: left-to-right infinite 90s ease-in-out;
+  animation: left-to-right infinite 190s ease-in-out;
 }
 
 .cloud-2 {
@@ -89,7 +80,7 @@
   top: 40%;
   width: 260px;
   height: 260px;
-  animation: right-to-left infinite 60s ease-in-out;
+  animation: right-to-left infinite 160s ease-in-out;
 }
 
 .cloud-5 {
@@ -98,7 +89,7 @@
   left: 100px;
   width: 300px;
   height: 300px;
-  animation: bottom-to-top infinite 60s ease-in-out;
+  animation: bottom-to-top infinite 260s ease-in-out;
 }
 
 .cloud-6 {
